@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+	<script type="text/javascript">
+		function Aaa($scope,$rootScope){
+           $scope.name = 'hello';
+           $rootScope.age = 20;
+		}
+
+		function Bbb($scope,$timeout){
+           $scope.name = 'hello';
+           $scope.age = 30;
+           $timeout(function(){
+             $scope.name = '你好';
+           }, 2000)
+
+           $scope.show = function(){
+           	$scope.age = '50'
+           }
+        }
+	</script>
+</head>
+<body>
+	<div ng-controller="Aaa" ng-click="name='hi'">
+		<p>{{name}}</p>
+	</div>
+	<div ng-controller="Bbb" >
+		<p>{{name}}</p>
+		<p ng-click="show()">{{age}}</p>
+	</div>
+</body>
+</html>

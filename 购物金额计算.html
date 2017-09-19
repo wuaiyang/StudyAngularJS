@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="angular.min.js"></script>
+	<script type="text/javascript">
+		function Aaa($scope){
+           $scope.iphone = {
+              money:2000,
+              num:1,
+              fre:12
+           };
+           
+           $scope.sum = function(){
+           	  return $scope.iphone.money*$scope.iphone.num;
+           }
+
+           $scope.$watch($scope.sum,function(newVal,oldVal){
+              $scope.iphone.fre = newVal >= 100 ? 0 : 10;
+           });
+		}
+
+	</script>
+</head>
+<body>
+	<div ng-controller="Aaa">
+		<p>价格：<input type="text" ng-model="iphone.money"></p>
+		<p>个数：<input type="text" ng-model="iphone.num"></p>
+		<p>费用：<span>{{ sum() | currency:'￥'}}</span></p>
+		<p>运费：<span>{{ iphone.fre | currency:'￥'}}</span></p>
+		<p>合计：<span>{{ sum()+iphone.fre | currency:'￥'}}</span></p>
+	</div>
+
+</body>
+</html>

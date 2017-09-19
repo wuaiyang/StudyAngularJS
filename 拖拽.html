@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#div1{width: 100px; height: 100px;background: red;position: absolute;}
+		#div2{width: 100px; height: 100px;background: red;position: absolute;left:200px;}
+	</style>
+</head>
+<script src="jquery-1.11.1.js"></script>
+<script src="angular.min.js"></script>
+<script type="text/javascript">
+  
+var m1 = angular.module('myApp',[]);
+m1.directive('myDrag',function(){
+	return {
+	    restrict:'A',
+	    link:function(scope,element,attr){
+
+   	 	    var disX = 0;
+   	 	    var disY = 0;
+   	 	    attr.myDrag = angular.equals(attr.myDrag,'true');
+
+   	 	    element.on('mousedown',function(ev){
+   	 		    var This = this;
+   	 		    disX = ev.pageX-$(this).offset().left;
+   	 		    disY = ev.pageY-$(this).offset().top;
+
+   	 		    if(attr.myDrag){
+					var $line = $('<div>');
+					$line.css({ width : $(this).outerWidth() , height : $(this).outerHeight() , position : 'absolute' , left : $(this).offset().left , top : $(this).offset().top , border : '1px gray dotted'});
+					$('body').append($line);
+				}
+
+   	 		    $(document).on('mousemove',function(ev){
+   	 		       if(attr.myDrag){
+                     $line.css('left', ev.pageX - disX);
+                     $line.css('top', ev.pageY - disY);
+   	 		       }else{
+   	 		         $(This).css('left', ev.pageX - disX);
+                     $(This).css('top', ev.pageY - disY);
+   	 		       }
+                   
+   	 		    });
+
+   	 		    $(document).on('mouseup',function(){
+   	 			   $(document).off();
+                   if(attr.myDrag){
+                   	  $(This).css('left', $line.offset().left);
+                      $(This).css('top', $line.offset().top);
+                      $line.remove();
+                   }
+   	 		    });
+
+   	 		return false;
+	    	})
+	    	
+	    		
+	    },
+	};
+});
+
+	
+</script>
+<body >
+	<div id="div1" my-drag="true"></div>
+	<div id="div2" my-drag="false"></div>
+</body>
+</html>

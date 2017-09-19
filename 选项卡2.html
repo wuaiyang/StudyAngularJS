@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#div1 div,#div2 div{ width:200px; height:200px; border:1px red solid; display:none;}
+        #div1 input.active , #div2 input.active{ background:red;}
+	</style>
+	<script src="jquery-1.11.1.js"></script>
+	<script src="angular.min.js"></script>
+	<script type="text/javascript">
+	    var m1 = angular.module('myApp',[]);
+	    m1.directive('myTab',function(){
+	    	return {
+	    		restrict:'E',
+	    		replace: true,
+	    		//scope:true, //使用独立作用域
+                scope:{
+                	myId:'@', //绑定字符串
+                	myData:'=',
+                }, //隔离作用域
+                controller:['$scope',function($scope){
+                   $scope.name = '你好';
+                }],//共享数据写在这
+	    		templateUrl :'temp3.html',
+	    		link:function(scope,element,attr){
+                   element.delegate('input','click',function(){
+                   	   $(this).attr('class','active').siblings('input').attr('class','');
+                   	   $(this).siblings('div').eq($(this).index()).css('display','block').siblings('div').css('display','none');
+                   });
+	    		},
+	    	};
+	    });
+	    m1.controller('Aaa',['$scope',function($scope){
+	    	  $scope.data1=[
+	    	  {title:'数学',content:'11111111'},
+	    	  {title:'语文',content:'22222222'},
+	    	  {title:'英语',content:'33333333'},
+	    	  ];
+
+	    	   $scope.data2=[
+	    	  {title:'物理',content:'44444444'},
+	    	  {title:'化学',content:'55555555'}, 	 
+	    	  ];
+	    }])
+		
+
+	</script>
+</head>
+<body ng-controller="Aaa">
+<my-tab my-id="div1" my-data="data1"></my-tab>
+<my-tab my-id="div2" my-data="data2"></my-tab>
+</body>
+</html>

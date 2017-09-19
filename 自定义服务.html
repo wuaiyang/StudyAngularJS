@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+
+  </style>
+  <script src="jquery-1.11.1.js"></script>
+  <script src="angular.min.js"></script>
+  <script type="text/javascript">
+      var m1 = angular.module('myApp',[]);
+      
+      m1.factory('myRandomNum',function(){
+         return function(num1,num2){
+           return Math.random()*(num2-num1)+num1;
+         }
+      });
+
+      m1.controller('Aaa',['$scope','myRandomNum',function($scope,myRandomNum){
+          console.log(myRandomNum(-3,6));
+      }]);
+    
+
+  </script>
+</head>
+<body>
+  <div ng-controller="Aaa">
+    
+  </div>
+
+</body>
+</html>
